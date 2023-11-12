@@ -8,6 +8,7 @@ class App{
     constructor(appInit:{port:number; middleware:any; controllers: any}){
         this.app=express();
         this.port=appInit.port;
+        this.routes(appInit.controllers);
     }
 
     public listen(){
@@ -16,6 +17,11 @@ class App{
         })
     }
 
+    private routes(controllers){
+        controllers.forEach(controller=>{
+            this.app.use(controller.path, controller.router);
+        });
+    }
 
 }
 
